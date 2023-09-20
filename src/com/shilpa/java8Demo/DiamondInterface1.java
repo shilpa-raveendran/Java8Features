@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 public interface DiamondInterface1 {
     default void name(){

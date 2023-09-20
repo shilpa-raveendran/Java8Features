@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 public class DiamondProblemClass implements DiamondInterface1,DiamondInterface2{
     @Override

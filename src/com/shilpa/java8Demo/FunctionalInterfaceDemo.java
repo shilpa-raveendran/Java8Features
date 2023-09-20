@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 @FunctionalInterface
 public interface FunctionalInterfaceDemo {

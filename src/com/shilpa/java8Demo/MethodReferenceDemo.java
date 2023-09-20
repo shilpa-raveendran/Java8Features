@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 public class MethodReferenceDemo {
     public static void main(String[] args) {

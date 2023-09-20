@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 public class StaticMethodDemoImpl implements StaticMethodDemo {
 

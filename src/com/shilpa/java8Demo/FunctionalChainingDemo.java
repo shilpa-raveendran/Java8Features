@@ -1,4 +1,4 @@
-package com.shilpa;
+package com.shilpa.java8Demo;
 
 import java.util.Random;
 import java.util.function.Function;
