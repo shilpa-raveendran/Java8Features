@@ -44,16 +44,32 @@ public class StreamDemo {
         System.out.println("=====min/max============");
        Optional<Employee> minSalary= employeeList.stream()
                .min(Comparator.comparingDouble(Employee::getSalary));
-       minSalary.stream().forEach(s-> System.out.println("Min Salary: "+s.getSalary()+"\nName:"+s.getName()));
+       minSalary.ifPresent(s-> System.out.println("Min Salary: "+s.getSalary()+"\nName:"+s.getName()));
 
         Optional<Employee> maxSalary= employeeList.stream()
                 .max(Comparator.comparingDouble(Employee::getSalary));
-        maxSalary.stream().forEach(s-> System.out.println("Max Salary: "+s.getSalary()+"\nName:"+s.getName()));
+        maxSalary.ifPresent(s-> System.out.println("Max Salary: "+s.getSalary()+"\nName:"+s.getName()));
 
         System.out.println("=====groupingBy============");
         Map<String, List<String>> genderGroup =employeeList.stream()
                 .collect(Collectors.groupingBy(Employee::getGender,
                         Collectors.mapping(Employee::getName,Collectors.toList())));
         System.out.println(genderGroup);
+
+        //Gender count
+        Map<String, Long> genderCount = employeeList.stream()
+                .collect((Collectors.groupingBy(Employee::getGender, Collectors.counting())));
+
+        System.out.println(genderCount);
+
+        Optional<Employee> firstEmp=employeeList.stream()
+                .filter(employee -> employee.getDept().equals("Development"))
+                .findFirst();
+        if(firstEmp.isPresent()){
+            System.out.println(firstEmp.get().getName());
+        }else{
+            System.out.println("No employee found!!!");
+        }
+
     }
 }
