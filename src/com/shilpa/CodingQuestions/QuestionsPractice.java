@@ -4,22 +4,23 @@ import com.shilpa.streamAPI.Employee;
 import com.shilpa.streamAPI.EmployeeDataBase;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class QuestionsPractice {
     public static void main(String[] args) {
-        //groupedByLength();
-        //joiningStrings();
-        //partitioningBy();
+        groupedByLength();
+        joiningStrings();
+        partitioningBy();
         List<Integer> nos=List.of(1,2,4,5,6,8,3);
-        //nos.stream().filter(x->x>5).forEach(x-> System.out.print(x+" "));
-        //System.out.println();
+        nos.stream().filter(x->x>5).forEach(x-> System.out.print(x+" "));
+        System.out.println();
         List<String> words= List.of("cat","dog","lion","tiger");
-        //words.stream().map(s->s.toUpperCase()).forEach(x-> System.out.print(x+" "));
+        words.stream().map(String::toUpperCase).forEach(x-> System.out.print(x+" "));
         List<List<String>> wordsList= Arrays.asList(Arrays.asList("cat","dog"),Arrays.asList("tiger","bat"));
-        //System.out.println(wordsList);
-        //List<String> result=wordsList.stream().flatMap(Collection::stream).collect(Collectors.toList());
-       // System.out.println(result);
+        System.out.println(wordsList);
+        List<String> result=wordsList.stream().flatMap(Collection::stream).collect(Collectors.toList());
+        System.out.println(result);
         List<Orders> ordersList=addOrders();
         getOrderItemsByCount(ordersList);
 
@@ -27,7 +28,41 @@ public class QuestionsPractice {
         List<Employee> employeeList = EmployeeDataBase.getAllEmployees();
 
         sortEmployee(employeeList);
+        
+        findNonRepeatedChar();
+
+        groupEmpByDept(employeeList);
+
+        Optional<Integer> max =nos.stream()
+                .max(Comparator.comparingInt(a -> a));
+        max.ifPresentOrElse(x-> System.out.println("Max: "+x),()-> System.out.println("No max found"));
+        int max1= nos.stream().max(Integer::compareTo).orElseThrow();
+        System.out.println(max1);
     }
+
+    //group Employee by Dept
+    private static void groupEmpByDept(List<Employee> employeeList) {
+       Map<String, List<String>> groupedEmp= employeeList.stream()
+                .collect(Collectors.groupingBy(Employee::getDept,
+                        Collectors.mapping(Employee::getName,Collectors.toList())));
+        System.out.println(groupedEmp);
+
+    }
+
+    //Find the First Non-Repeated Character in a String
+    private static void findNonRepeatedChar() {
+        String word="hehllo";
+       Optional<Character> res= word.chars()
+                .mapToObj(c->(char) c)
+                .collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry-> entry.getValue()==1)
+                .map(Map.Entry::getKey)
+                .findFirst();
+       res.ifPresentOrElse(System.out::println,()-> System.out.println("No Non-Repeated Character found"));
+    }
+    
     //sort employees by salary
     private static void sortEmployee(List<Employee> employeeList) {
         employeeList.stream()
@@ -57,7 +92,9 @@ public class QuestionsPractice {
     }
 
     public static void getOrderItemsByCount(List<Orders> ordersList){
-        Map<String, Long> itemsCount =ordersList.stream().flatMap(x->x.getItemsList().stream()).collect(Collectors.groupingBy(Item::getItemName,Collectors.counting()));
+        Map<String, Long> itemsCount =ordersList.stream()
+                .flatMap(x->x.getItemsList().stream())
+                .collect(Collectors.groupingBy(Item::getItemName,Collectors.counting()));
         System.out.println(itemsCount);
 
     }
