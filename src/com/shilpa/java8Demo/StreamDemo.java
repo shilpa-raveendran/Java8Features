@@ -48,11 +48,11 @@ public class StreamDemo {
         list1.stream().sorted(Comparator.reverseOrder()).forEach(i -> System.out.print(i + " "));
         System.out.println();
         System.out.println("========Sorted Processing in Lambda exp========");
-        list1.stream().sorted((i1, i2) -> i1.compareTo(i2)).forEach(i -> System.out.print(i + " "));
+        list1.stream().sorted(Comparator.naturalOrder()).forEach(i -> System.out.print(i + " "));
         System.out.println();
 
         System.out.println("========Min and Max Processing========");
-        System.out.println("Min: " + newList.stream().min((i1, i2) -> i1.compareTo(i2)).get());
+        System.out.println("Min: " + newList.stream().min(Integer::compareTo).get());
         System.out.println("Max: " + newList.stream().max(Integer::compareTo).get());
         System.out.println();
 
